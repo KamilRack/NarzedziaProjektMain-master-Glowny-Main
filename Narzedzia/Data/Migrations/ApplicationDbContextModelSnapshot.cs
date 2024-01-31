@@ -17,7 +17,7 @@ namespace Narzedzia.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.21")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -214,6 +214,51 @@ namespace Narzedzia.Data.Migrations
                     b.HasIndex("WydzialId");
 
                     b.ToTable("Awarie");
+                });
+
+            modelBuilder.Entity("Narzedzia.Models.Events", b =>
+                {
+                    b.Property<int>("IdCal")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCal"), 1L, 1);
+
+                    b.Property<string>("DescriptionCal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndCal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NameCal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NarzedzieId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StanowiskoId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartCal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("WydzialId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("IdCal");
+
+                    b.HasIndex("NarzedzieId");
+
+                    b.HasIndex("StanowiskoId");
+
+                    b.HasIndex("WydzialId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Narzedzia.Models.Kategoria", b =>
@@ -526,6 +571,33 @@ namespace Narzedzia.Data.Migrations
                     b.Navigation("Wydzial");
                 });
 
+            modelBuilder.Entity("Narzedzia.Models.Events", b =>
+                {
+                    b.HasOne("Narzedzia.Models.Narzedzie", "Narzedzie")
+                        .WithMany("Events")
+                        .HasForeignKey("NarzedzieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Narzedzia.Models.Stanowisko", "Stanowisko")
+                        .WithMany("Events")
+                        .HasForeignKey("StanowiskoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Narzedzia.Models.Wydzial", "Wydzial")
+                        .WithMany("Events")
+                        .HasForeignKey("WydzialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Narzedzie");
+
+                    b.Navigation("Stanowisko");
+
+                    b.Navigation("Wydzial");
+                });
+
             modelBuilder.Entity("Narzedzia.Models.Narzedzie", b =>
                 {
                     b.HasOne("Narzedzia.Models.Kategoria", "Kategorie")
@@ -578,6 +650,8 @@ namespace Narzedzia.Data.Migrations
             modelBuilder.Entity("Narzedzia.Models.Narzedzie", b =>
                 {
                     b.Navigation("Awarie");
+
+                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("Narzedzia.Models.Producent", b =>
@@ -588,6 +662,8 @@ namespace Narzedzia.Data.Migrations
             modelBuilder.Entity("Narzedzia.Models.Stanowisko", b =>
                 {
                     b.Navigation("Awarie");
+
+                    b.Navigation("Events");
 
                     b.Navigation("Uzytkownicy");
                 });
@@ -602,6 +678,8 @@ namespace Narzedzia.Data.Migrations
             modelBuilder.Entity("Narzedzia.Models.Wydzial", b =>
                 {
                     b.Navigation("Awarie");
+
+                    b.Navigation("Events");
 
                     b.Navigation("Uzytkownicy");
                 });

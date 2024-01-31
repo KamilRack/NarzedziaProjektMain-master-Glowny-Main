@@ -21,9 +21,6 @@
 
 <h1 class="oswald_400 tools-header">Spis Narzędzi</h1>
 <hr />
-<p>
-    <a asp-action="Create" class="btn btn-outline-success">Dodaj</a>
-</p>
 
 <div class="form-group">
     <label for="searchInput">Wyszukaj narzędzie:</label>
@@ -47,10 +44,18 @@
                         Status: @item.Status<br />
                         Użytkownik: @(item.Uzytkownicy != null ? item.Uzytkownicy.UserName : "Brak informacji")
                     </p>
-                    <a asp-action="Details" asp-route-id="@item.NarzedzieId" class="btn btn-outline-secondary btn-sm"><i class="bi bi-info-square"></i> Szczegóły</a>
-                    <a asp-action="Edit" asp-route-id="@item.NarzedzieId" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i> Edytuj</a>
-                    <a asp-action="Delete" asp-route-id="@item.NarzedzieId" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Usuń</a>
-                </div>
+                    @{
+    if (User.IsInRole("admin") || (User.IsInRole("nadzor")))
+    {
+                            <div class="btn-group btn-group-lg">
+                                <a asp-action="Details" asp-route-id="@item.NarzedzieId" class="btn btn-outline-secondary btn-sm" title="Szczegóły"><i class="bi bi-info-square"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.NarzedzieId" class="btn btn-outline-primary btn-sm" title="Edytuj"><i class="bi bi-pencil"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.NarzedzieId" class="btn btn-outline-danger btn-sm" title="Usuń"><i class="bi bi-trash"></i></a>
+                            </div>
+                        }
+    }
+                   
+                    </div>
             </div>
         </div>
     }

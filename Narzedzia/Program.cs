@@ -16,7 +16,7 @@ builder.Services.AddDefaultIdentity<Uzytkownik>(options => options.SignIn.Requir
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
-
+builder.Services.AddScoped<IDAL, DAL>();
 // Dodaj obs³ugê sesji
 builder.Services.AddSession();
 
@@ -53,15 +53,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "TicketList",
-    pattern: "SpisZgloszen/{controller}/{action}/{id?}",
-    defaults: new { controller = "Awarie", action = "Create" }
-    );
-
-app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+       name: "calendar",
+       pattern: "{controller=CalendarView}/{action=CalendarVW}/{id?}");
 
 app.MapRazorPages();
 

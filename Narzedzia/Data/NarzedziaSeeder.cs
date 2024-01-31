@@ -26,6 +26,9 @@ namespace Narzedzia.Data
                     SeedNarzedzie(dbContext);
                 }
         }
+       
+       
+
         private static void SeedRoles(ApplicationDbContext dbContext)
         {
             var roleStore = new RoleStore<IdentityRole>(dbContext);
@@ -805,7 +808,7 @@ namespace Narzedzia.Data
                 dbContext.SaveChanges();
             }
             //20
-            if (!dbContext.Narzedzia.Any(n => n.NumerNarzedzia == 804748))
+            if (!dbContext.Narzedzia.Any(n => n.NumerNarzedzia == 804648))
             {
                 var narzedzie20 = new Narzedzie
                 {
@@ -813,7 +816,7 @@ namespace Narzedzia.Data
                     KategoriaId = 2,
                     DataPrzyjecia = new DateTime(2018, 11, 20),
                     UzytkownikId = LosowyUser(dbContext),
-                    NumerNarzedzia = 804647,
+                    NumerNarzedzia = 804648,
                     Nazwa = "Próby rama dolna",
                     Status = Status.używane,
                 };
@@ -963,7 +966,7 @@ namespace Narzedzia.Data
                 var narzedzie29 = new Narzedzie
                 {
                     ProducentId = 13,
-                    KategoriaId = 14,
+                    KategoriaId = 12,
                     DataPrzyjecia = new DateTime(2018, 8, 1),
                     UzytkownikId = LosowyUser(dbContext),
                     NumerNarzedzia = 806162,

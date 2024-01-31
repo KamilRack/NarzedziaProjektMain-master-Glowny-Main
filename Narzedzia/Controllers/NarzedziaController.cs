@@ -16,10 +16,12 @@ namespace Narzedzia.Controllers
     public class NarzedziaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDAL _dal;
 
-        public NarzedziaController(ApplicationDbContext context)
+        public NarzedziaController(ApplicationDbContext context, IDAL dal)
         {
             _context = context;
+            _dal = dal;
         }
 
         // GET: Narzedzia
@@ -129,18 +131,27 @@ namespace Narzedzia.Controllers
 
             ViewData["KategoriaId"] = new SelectList(_context.Kategorie, "KategoriaId", "NazwaKategorii", narzedzie.KategoriaId);
             ViewData["ProducentId"] = new SelectList(_context.Producenci, "ProducentId", "NazwaProducenta", narzedzie.ProducentId);
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Email", narzedzie.UzytkownikId);
 
             if (narzedzie.UzytkownikId == null)
             {
-                ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Imie_Nazwisko");
+                ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Email");
             }
             else
             {
-                ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Imie_Nazwisko", narzedzie.UzytkownikId);
-                ViewData["Obecny"] = narzedzie.Uzytkownicy?.Imie_Nazwisko;
+                ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Email", narzedzie.UzytkownikId);
+                ViewData["Obecny"] = narzedzie.Uzytkownicy?.Email;
                 ViewData["ObecnyId"] = narzedzie.UzytkownikId;
             }
+            var updatedNarzedzie = await _context.Narzedzia
+      .Include(a => a.Uzytkownicy)
+      .FirstOrDefaultAsync(m => m.NarzedzieId == id);
 
+            if (updatedNarzedzie != null)
+            {
+                narzedzie = updatedNarzedzie;
+            }
+            //
             return View(narzedzie);
         }
 
@@ -180,8 +191,26 @@ namespace Narzedzia.Controllers
                         existingNarzedzie.ZdjecieFileName = null;
                     }
 
-                    if (ZdjecieFileName != null && ZdjecieFileName.Length > 0)
+                    // Usunięcie zdjęcia, jeśli użytkownik zaznaczył odpowiednią opcję
+                    if (usunZdjecie && !string.IsNullOrEmpty(existingNarzedzie.ZdjecieFileName))
                     {
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/narzedziagraphic", existingNarzedzie.ZdjecieFileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+
+                        existingNarzedzie.ZdjecieFileName = null;
+                    }
+
+                    // Jeśli użytkownik nie chce zmieniać zdjęcia i pole ZdjecieFileName nie jest puste, zachowaj obecne zdjęcie
+                    if (ZdjecieFileName == null && !string.IsNullOrEmpty(existingNarzedzie.ZdjecieFileName))
+                    {
+                        narzedzie.ZdjecieFileName = existingNarzedzie.ZdjecieFileName;
+                    }
+                    else if (ZdjecieFileName != null && ZdjecieFileName.Length > 0)
+                    {
+                        // Jeśli użytkownik przesyła nowe zdjęcie, zaktualizuj je
                         string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(ZdjecieFileName.FileName);
                         string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/narzedziagraphic", uniqueFileName);
 
@@ -190,8 +219,7 @@ namespace Narzedzia.Controllers
                             await ZdjecieFileName.CopyToAsync(stream);
                         }
 
-                        // Przypisz nazwę pliku do właściwości ZdjecieFileName modelu Narzedzie
-                        existingNarzedzie.ZdjecieFileName = uniqueFileName;
+                        narzedzie.ZdjecieFileName = uniqueFileName;
                     }
 
                     // Dodaj przypisanie dla UzytkownikId tylko, jeśli obecny nie jest null
@@ -212,10 +240,10 @@ namespace Narzedzia.Controllers
                     _context.Update(existingNarzedzie);
                     await _context.SaveChangesAsync();
 
+                    ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Imie_Nazwisko", existingNarzedzie.UzytkownikId);
                     ViewData["Obecny"] = existingNarzedzie.Uzytkownicy?.Imie_Nazwisko;
                     ViewData["ObecnyId"] = existingNarzedzie.UzytkownikId;
 
-                    return RedirectToAction(nameof(Details), new { id = existingNarzedzie.NarzedzieId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -228,12 +256,25 @@ namespace Narzedzia.Controllers
                         throw;
                     }
                 }
+                return RedirectToAction(nameof(Index));
+
             }
 
             // Inicjalizacja SelectList
             ViewData["KategoriaId"] = new SelectList(_context.Kategorie, "KategoriaId", "NazwaKategorii", narzedzie.KategoriaId);
             ViewData["ProducentId"] = new SelectList(_context.Producenci, "ProducentId", "NazwaProducenta", narzedzie.ProducentId);
-            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Imie_Nazwisko", narzedzie.UzytkownikId);
+            ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Id", narzedzie.UzytkownikId);
+
+            if (narzedzie.UzytkownikId == null)
+    {
+        ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Email");
+    }
+    else
+    {
+        ViewData["UzytkownikId"] = new SelectList(_context.Uzytkownicy, "Id", "Email", narzedzie.UzytkownikId);
+        ViewData["Obecny"] = narzedzie.Uzytkownicy?.Email;
+        ViewData["ObecnyId"] = narzedzie.UzytkownikId;
+    }
 
             return View(narzedzie);
         }

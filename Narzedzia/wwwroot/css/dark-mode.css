@@ -3,16 +3,41 @@
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     background-color: #292929;
-    color: #666666;
+    color: #FFFFFF;
 }
+
 .table {
     background-color: #292929;
     color: white;
 }
+.tools-header {
+    padding-top: 40px; /* Dostosuj wartość marginesu do wysokości paska nawigacyjnego */
+    font-family: 'Oswald';
+    font-weight: 500;
+}
+
+h1 {
+    color: #FFFFFF;
+}
+#tools-darkheader {
+    color: #FFFFFF;
+}
+.tools-darkheader {
+    color: white;
+}
+.tools-header {
+    padding-top: 40px; /* Dostosuj wartość marginesu do wysokości paska nawigacyjnego */
+    font-family: 'Oswald';
+    font-weight: 500;
+    color: #FFFFFF; /* Kolor tekstu */
+}
+
+#tools-header {
+    color: #FFFFFF; /* Kolor tekstu */
+}
 
 html {
     font-size: 14px;
-    
 }
 
 @media (min-width: 768px) {
@@ -72,7 +97,6 @@ html {
 .cd {
     text-align: center;
     padding: 0;
-    margin: 10px;
 }
 
 .cb-p {
@@ -81,6 +105,7 @@ html {
     border-top-right-radius: .375rem;
     font-size: 4rem;
     color: white;
+    border-color: black;
 }
 
 .cb-u {
@@ -89,6 +114,7 @@ html {
     border-top-right-radius: .375rem;
     font-size: 4rem;
     color: white;
+    border-color: black;
 }
 
 .cb-n {
@@ -97,6 +123,7 @@ html {
     border-top-right-radius: .375rem;
     font-size: 4rem;
     color: white;
+    border-color: black;
 }
 
 .cb-z {
@@ -105,11 +132,34 @@ html {
     border-top-right-radius: .375rem;
     font-size: 4rem;
     color: white;
+    border-color: black;
 }
 
-.btn-tool {
-    border-bottom: solid 8px var(--bs-success);
+.cb-e {
+    background-color: var(--bs-secondary);
+    color: white;
+    border-color: black;
 }
+
+.cb-q {
+    background-color: var(--bs-success);
+    color: white;
+    border-color: black;
+}
+
+.cb-w {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: black;
+}
+
+.cb-r {
+    background-color: #abadaf;
+    color: white;
+    border-color: black;
+}
+
+
 
 .btn-user {
     border-bottom: solid 8px var(--bs-primary);
@@ -129,8 +179,66 @@ dd {
     }
 }
 
-body {
+#calendar {
+    max-width: 90%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: auto;
 }
+
+.calendar {
+    max-width: 90%;
+    height: 80%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: auto;
+}
+
+.fc-enter {
+    transition: background-color 0.3s ease;
+    background-color: #ddd; /* Kolor tła po najechaniu na wydarzenie */
+    color: white;
+}
+
+.single-day-event {
+    background-color: #0275d8; /* Kolor dla jednodniowego wydarzenia */
+    color: white;
+}
+
+/* Dodaj style dla wydarzeń trwających dłużej niż jeden dzień */
+.multi-day-event {
+    background-color: #5bc0de; /* Kolor dla wielodniowego wydarzenia */
+    color: white;
+}
+
+.fc-event-title {
+    color: white;
+    font-weight: bold;
+}
+
+.fc-event-time {
+    color: white;
+    font-weight: bold;
+}
+/* Dodajemy styl dla weekendów */
+.fc-day-sat, .fc-day-sun {
+    background-color: lightgray; /* Kolor tła dla sobót i niedziel */
+    font-weight: bold; /* Wytłuszczenie tekstu dla sobót i niedziel */
+}
+
+.btn-primary {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
+#btn-primary {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+
 /* Dark mode styles for Bootstrap cards */
 .card {
     background-color: #555; /* Dark gray background */
@@ -212,12 +320,36 @@ body {
     background-color: var(--bs-warning);
     color: white;
 }
-.card-footer
-{
+
+.card-footer {
     color: black;
 }
+
 .oswald_300 {
     font-family: 'Oswald', sans-serif;
     font-weight: 300;
-    color: black;
+    color: white;
 }
+
+.footer {
+    color: white;
+}
+#footer {
+    color: white;
+}
+#myChart {
+    color: #ddd;
+}
+
+.h1 {
+    color: #FFFFFF;
+}
+#tools-header {
+    color: #FFFFFF;
+}
+.chartjs-legend {
+    color: #ddd;
+}
+.chartjs-legend li span {
+            color: #ddd;
+        }

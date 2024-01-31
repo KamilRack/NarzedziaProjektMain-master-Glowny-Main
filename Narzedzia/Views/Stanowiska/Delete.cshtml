@@ -4,7 +4,7 @@
     ViewData["Title"] = "Usuwanie stanowiska";
 }
 
-<h1 class="oswald_400 tools-header">Usuwanie stanowiska</h1>
+<h1 class="oswald_400 tools-header">Usuwanie stanowiska:</h1>
 
 @{
     if (!String.IsNullOrEmpty(ViewBag.DeleteMessage))
@@ -36,6 +36,6 @@
                     <input type="submit" value="Usuń" class="btn btn-danger" />
             }
         }
-        <a asp-action="Index" class="btn btn-light">Powrót do listy</a>
+        <a asp-action="Index" class="btn btn-secondary">Powrót do listy</a>
     </form>
 </div>

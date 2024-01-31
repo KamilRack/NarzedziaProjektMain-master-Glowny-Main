@@ -16,10 +16,12 @@ namespace Narzedzia.Controllers
 	public class WydzialyController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public WydzialyController(ApplicationDbContext context)
+        private readonly IDAL _idal;
+        public WydzialyController(ApplicationDbContext context, IDAL idal)
         {
             _context = context;
+            _idal = idal;
+
         }
 
         // GET: Wydzialy

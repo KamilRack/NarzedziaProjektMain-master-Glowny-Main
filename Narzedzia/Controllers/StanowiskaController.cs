@@ -16,10 +16,13 @@ namespace Narzedzia.Controllers
 	public class StanowiskaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDAL _dal;
 
-        public StanowiskaController(ApplicationDbContext context)
+        public StanowiskaController(ApplicationDbContext context, IDAL dal)
         {
             _context = context;
+            _dal = dal;
+
         }
 
         // GET: Stanowiska

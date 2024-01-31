@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
-<h1 class="tools-header">Lista zgłoszeń awarii</h1>
+<h1 class="tools-header">Lista zgłoszeń awarii:</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-outline-success">Dodaj</a>
@@ -41,7 +41,7 @@
             <th>
                 @Html.DisplayName("Użytkownik zgłaszający:")
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayName("Nazwa narzędzia:")
             </th>
             <th>
@@ -56,7 +56,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="col-md-2">
                     @* @Html.DisplayFor(modelItem => item.DescriptionAwaria)*@
                     @if (item.DescriptionAwaria.Length <= 40)
                     {
@@ -98,7 +98,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Uzytkownicy.Email)
                 </td>
-                <td>
+                <td class="col-md-2">
                     @Html.DisplayFor(modelItem => item.Narzedzie.Nazwa)
                 </td>
                 <td id="user-cell -@item.IdAwaria" class="col-md-2">
@@ -120,11 +120,12 @@
                     @* @Html.DisplayFor(ModelItem => item.UzytkownikRealizujacy.Email)*@
                 </td>
                 <td>
-                    <div class="btn-group btn-group-md">
-                        <a asp-action="Details" asp-route-id="@item.IdAwaria" class="btn btn-outline-secondary btn-sm"><i class="bi bi-info-square"></i> Szczegóły</a>
-                        <a asp-action="Edit" asp-route-id="@item.IdAwaria" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i> Edytuj</a>
-                        <a asp-action="Delete" asp-route-id="@item.IdAwaria" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Usuń</a>
+                    <div class="btn-group btn-group-lg">
+                        <a asp-action="Details" asp-route-id="@item.IdAwaria" class="btn btn-outline-secondary btn-sm" title="Szczegóły"><i class="bi bi-info-square"></i></a>
+                        <a asp-action="Edit" asp-route-id="@item.IdAwaria" class="btn btn-outline-primary btn-sm" title="Edytuj"><i class="bi bi-pencil"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.IdAwaria" class="btn btn-outline-danger btn-sm" title="Usuń"><i class="bi bi-trash"></i></a>
                     </div>
+
                 </td>
             </tr>
         }

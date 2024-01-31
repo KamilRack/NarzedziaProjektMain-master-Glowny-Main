@@ -1,4 +1,25 @@
-﻿.card-footer {
+﻿body {
+    margin-bottom: 60px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    background-color: #ffffff; /* Kolor tła */
+    color: #000000; /* Kolor tekstu */
+}
+
+.tools-header {
+    padding-top: 40px; /* Dostosuj wartość marginesu do wysokości paska nawigacyjnego */
+    font-family: 'Oswald';
+    font-weight: 500;
+    color: #000000; /* Kolor tekstu */
+}
+
+#tools-header {
+    color: #000000; /* Kolor tekstu */
+}
+h1 {
+    color: #000000; /* Kolor tekstu */
+}
+.card-footer {
     font-family: Roboto;
     font-weight: bold;
     font-size: 18px;
@@ -47,3 +68,35 @@
     .d-grid a {
         margin-right: 0px; /* Dostosuj wartość marginesu poziomego według potrzeb */
     }
+
+canvas {
+    font-size: 16px;
+    color: #808080;
+}
+
+.header-title {
+    margin-bottom: 5px; /* Dostosuj wartość marginesu według potrzeb */
+}
+.cb-e {
+    background-color: var(--bs-secondary);
+    color: white;
+    border-color: black;
+}
+
+.cb-q {
+    background-color: var(--bs-success);
+    color: white;
+    border-color: black;
+}
+
+.cb-w {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: black;
+}
+
+.cb-r {
+    background-color: #abadaf;
+    color: white;
+    border-color: black;
+}

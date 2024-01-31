@@ -59,6 +59,9 @@ namespace Narzedzia.Models
         [Display(Name = "Usunąć zdjęcie")]
         public bool UsunZdjecie { get; set; }
 
+        public virtual ICollection<Events> Events { get; set; }
+
+
     }
 
     public enum Status

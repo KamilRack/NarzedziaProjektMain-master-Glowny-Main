@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap">
 
 </head>
-<h1 class="oswald_400 tools-header">Usuwanie narzędzia</h1>
+<h1 class="oswald_400 tools-header">Usuwanie awarii:</h1>
 
 @{
     if (!String.IsNullOrEmpty(ViewBag.DeleteMessage))
@@ -78,6 +78,6 @@
                 <input type="submit" value="Usuń" class="btn btn-danger" />
             }
         }
-        <a asp-action="Index" class="btn btn-light">Powrót do listy</a>
+        <a asp-action="Index" class="btn btn-secondary">Powrót do listy</a>
     </form>
 </div>

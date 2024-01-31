@@ -8,9 +8,23 @@ namespace Narzedzia.Data
 {
     public class ApplicationDbContext : IdentityDbContext<Uzytkownik>
     {
+       
+        public ApplicationDbContext()
+        {
+           
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DatabaseToolV1;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
         }
         public DbSet<Uzytkownik> Uzytkownicy { get; set; }
         public DbSet<Narzedzie> Narzedzia { get; set; }
@@ -19,6 +33,7 @@ namespace Narzedzia.Data
         public DbSet<Stanowisko> Stanowiska { get; set; }
         public DbSet<Kategoria> Kategorie { get; set; }
         public DbSet<Awaria> Awarie { get; set; }
+        public DbSet<Events> Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
@@ -89,6 +104,7 @@ namespace Narzedzia.Data
                 .HasMany(c => c.Uzytkownicy)
                 .WithOne(t => t.Stanowiska);
 
+           
         }
     }
 }

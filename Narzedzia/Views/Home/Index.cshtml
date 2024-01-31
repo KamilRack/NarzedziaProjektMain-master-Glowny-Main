@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dark-mode.css" id="dark-mode-stylesheet"> <!-- Arkusz stylów dla trybu ciemnego -->
 
 
 
@@ -67,9 +68,7 @@
             margin-bottom: -20px; /* Dostosuj wartość marginesu według potrzeb */
         }
 
-        .header-title {
-            margin-bottom: 5px; /* Dostosuj wartość marginesu według potrzeb */
-        }
+      
 
         /* Dodaj styl do kontenera row */
         .row-chart {
@@ -90,6 +89,32 @@
         .tools-header {
             padding-top: 40px; /* Dostosuj wartość marginesu do wysokości paska nawigacyjnego */
         }
+
+        .cb-e {
+            background-color: var(--bs-secondary);
+            color: white;
+            border-color: black;
+        }
+
+        .cb-q {
+            background-color: var(--bs-success);
+            color: white;
+            border-color: black;
+        }
+
+        .cb-w {
+            background-color: var(--bs-primary);
+            color: white;
+            border-color: black;
+        }
+
+        .cb-r {
+            background-color: #abadaf;
+            color: white;
+            border-color: black;
+        }
+
+        
     </style>
 
 </head>
@@ -101,39 +126,36 @@
         <div class="container">
             <div class="row justify-content-center justify-text-center gx-1">
 
-                <h1 class="text-center oswald_400 header-title tools-header">Narzędzia: @ViewBag.NarzedziaList</h1>
+                <h1 class="text-center oswald_400 header-title tools-header tools-darkheader">Narzędzia: @ViewBag.NarzedziaList</h1>
 
                 <hr />
-                <div class="card cd col-6 col-sm-4 hover-card">
-                    <div class="card-body cb-p">@ViewBag.Przyjete</div>
-                    <div class="card-footer inter_300">Przyjęte</div>
-                </div>
-
                 <div class="card cd col-6 col-sm-4 hover-card">
                     <div class="card-body cb-u">@ViewBag.Uzywane</div>
                     <div class="card-footer inter_300">Używane</div>
                 </div>
-
                 <div class="card cd col-6 col-sm-4 hover-card">
                     <div class="card-body cb-n">@ViewBag.Naprawiane</div>
                     <div class="card-footer inter_300">Naprawiane</div>
                 </div>
-
+                <div class="card cd col-6 col-sm-4 hover-card">
+                    <div class="card-body cb-p">@ViewBag.Przyjete</div>
+                    <div class="card-footer inter_300">Przyjęte</div>
+                </div>
                 <div class="card cd col-6 col-sm-4 hover-card">
                     <div class="card-body cb-z">@ViewBag.Zlikwidowane</div>
                     <div class="card-footer inter_300">Zlikwidowane</div>
                 </div>
-                <h1 class="text-center oswald_400 header-title">Awarie: @ViewBag.AwarieList</h1>
+                <h1 class="text-center oswald_400 header-title tools-header tools-darkheader">Awarie: @ViewBag.AwarieList</h1>
 
                     <hr />
                     <div class="card cd col-lg-4 col-md-6 col-sm-12 hover-card">
                         <div class="card-body cb-q">@ViewBag.NoweAwarie</div>
-                        <div class="card-footer inter_300">Nowe:</div>
+                        <div class="card-footer inter_300">Nowe</div>
                     </div>
 
                     <div class="card cd col-lg-4 col-md-6 col-sm-12 hover-card">
                         <div class="card-body cb-w">@ViewBag.AwarieRealizacja</div>
-                        <div class="card-footer inter_300">Realizowane:</div>
+                        <div class="card-footer inter_300">Realizowane</div>
                     </div>
 
                     <div class="card cd col-lg-4 col-md-6 col-sm-12 hover-card">
@@ -143,7 +165,7 @@
 
                     <div class="card cd col-lg-4 col-md-6 col-sm-12 hover-card">
                         <div class="card-body cb-e">@ViewBag.AwarieZakonczone</div>
-                        <div class="card-footer inter_300">Zakończone:</div>
+                        <div class="card-footer inter_300">Zakończone</div>
                     </div>
               
             </div>
@@ -151,6 +173,8 @@
             </div>
 
         <div class="container">
+            <h1 class="text-center oswald_400 header-title tools-header tools-darkheader">Wykresy:</h1>
+            <hr>
 
             <!--  Canvas w osobnej kolumnie z odpowiednimi klasami -->
             <div class="row justify-content-center justify-text-center mb-5 chart-column">
@@ -505,6 +529,7 @@
     }
     <script src="../dist/modules/chart.min.js"></script>
     <script>
+        var isDarkMode = localStorage.getItem('isDarkMode') === 'true';
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -514,37 +539,47 @@
                     label: 'Statystyki awarii',
                     data: @Html.Raw(Json.Serialize(data)), // Serializuj dane jako tablicę JSON
                     borderWidth: 2,
-                    backgroundColor: 'rgb(87,75,144)',
-                    borderColor: 'rgb(87,75,144)',
-                    borderWidth: 2.5,
+                    backgroundColor: '#574B90',
+                    borderColor: '#574B90',
+                    borderWidth: 3,
                     pointBackgroundColor: '#ffffff',
-                    pointRadius: 5
+                    pointRadius: 6
                 }]
             },
             options: {
-                legend: {
-                    display: false
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
+                        }
+                    }
                 },
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
-                            beginAtZero: true,
-                            stepSize: 555
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
                         }
-                    }],
-                    xAxes: [{
+                    },
+                    x: {
                         ticks: {
-                            display: false
-                        },
-                        gridLines: {
-                            display: false
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
                         }
-                    }]
-                },
+                    }
+                }
             }
         });
     </script>
-
     @{
         // Pobierz dane
         var przyjete = ViewBag.Przyjete as int? ?? 0;
@@ -557,6 +592,7 @@
         var dataNarzedzia = new List<int> { przyjete, uzywane, naprawiane, zlikwidowane };
     }
     <script>
+        var isDarkMode = localStorage.getItem('isDarkMode') === 'true';
         var ctxNarzedzia = document.getElementById("myChartNarzedzia").getContext('2d');
         var myChartNarzedzia = new Chart(ctxNarzedzia, {
             type: 'bar',
@@ -574,29 +610,39 @@
                 }]
             },
             options: {
-                legend: {
-                    display: false
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
+                        }
+                    }
                 },
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
-                            beginAtZero: true,
-                            stepSize: 555
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
                         }
-                    }],
-                    xAxes: [{
+                    },
+                    x: {
                         ticks: {
-                            display: false
-                        },
-                        gridLines: {
-                            display: false
+                            color: isDarkMode ? '#ffffff' : '#000000',
+                            font: {
+                                size: 18
+                            }
                         }
-                    }]
-                },
+                    }
+                }
             }
         });
     </script>
-   
    
 
 }

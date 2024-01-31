@@ -25,6 +25,11 @@ namespace Narzedzia.Controllers
             _context = context;
         }
 
+        public IActionResult Pomoc()
+        {
+            return View("Information"); // Zwraca widok Information.cshtml
+        }
+
         public IActionResult GoToStatistic()
         {
             return View("Statistic");
@@ -77,9 +82,6 @@ namespace Narzedzia.Controllers
 
         public IActionResult Index()
         {
-
-
-           
 
             if (User.IsInRole("admin") || User.IsInRole("nadzor"))
             {
@@ -151,8 +153,6 @@ namespace Narzedzia.Controllers
                 ViewBag.Zlikwidowane = narzedzia.Where(x => x.Status == Status.zlikwidowane).Count();
                 ViewBag.ImieNazwisko = _context.Uzytkownicy.Where(x => x.Id == userId).Select(x => x.Imie_Nazwisko).FirstOrDefault();
 
-
-
                 var viewModel = new Tuple<List<Narzedzie>, List<Awaria>>(narzedzia, awarie);
                 return View("Index", viewModel); 
                 // Tu przekazujemy model do widoku Index
@@ -167,15 +167,10 @@ namespace Narzedzia.Controllers
                                                  //  var viewModel = new Tuple<List<Narzedzie>, List<Awaria>>(narzedzia, awarie);
                                                  //  return View(narzedzia);
 
-
             }
-
 
             return View();
 
-
         }
-       
     }
-
 }

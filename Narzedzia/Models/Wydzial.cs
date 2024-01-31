@@ -22,6 +22,8 @@ namespace Narzedzia.Models
 
         public virtual List<Uzytkownik>? Uzytkownicy { get; set; }
         public virtual List<Awaria>? Awarie { get; set; }
+        public virtual ICollection<Events> Events { get; set; }
+
 
     }
 }
